@@ -1,0 +1,27 @@
+package practice;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class AlertPrompt {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.selenium.dev/selenium/web/alerts.html ");
+		driver.findElement(By.xpath("//a[text()='prompt with default happen']")).click();
+		Alert alert=driver.switchTo().alert();
+		  String message = "Hello";  
+	      alert.sendKeys(message);
+	      alert.accept();
+	      Thread.sleep(2000);
+	      System.out.println("The typed message in alert" + message);
+	      driver.quit();
+	      
+
+		
+
+	}
+
+}
