@@ -1,0 +1,44 @@
+package practice;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.time.Duration;
+import java.util.Set;
+
+public class SeparateWindow {
+	  public static void main(String[] args) {
+    WebDriver driver = new ChromeDriver();
+   driver.get("https://demo.automationtesting.in/Windows.html");
+    WebElement button = driver.findElement(By.xpath("//a[text()='Open New Seperate Windows']"));
+    button.click();
+    WebElement button1 = driver.findElement(By.xpath("//button[text()='click']"));
+    button1.click();
+    
+    
+    String currentWindowHandle = driver.getWindowHandle();
+    WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+    wait1.until(ExpectedConditions.numberOfWindowsToBe(2));  
+    Set<String> allWindowHandles = driver.getWindowHandles();
+    for (String handle : allWindowHandles) {
+        if (!handle.equals(currentWindowHandle)) {
+            driver.switchTo().window(handle);
+            break;
+        }
+    }
+
+    String newWindowTitle = driver.getTitle();
+    String expectedTitle = "Selenium";
+    if (newWindowTitle.equals(expectedTitle)) {
+        System.out.println("Pass");
+    } else {
+        System.out.println("Fail");
+    }
+    driver.close();
+    driver.switchTo().window(currentWindowHandle);
+    driver.quit();
+}
+}
